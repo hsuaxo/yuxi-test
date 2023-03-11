@@ -4,11 +4,12 @@ import "./styles.scss";
 
 interface SearchBoxProps {
   onSearch(text: string): void;
+  text?: string;
   loading?: boolean;
 }
 
 const SearchBox = (props: SearchBoxProps) => {
-  const [text, setText] = useState("");
+  const [text, setText] = useState(props.text!);
   const { onSearch, loading } = props;
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {

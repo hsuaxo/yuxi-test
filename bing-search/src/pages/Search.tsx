@@ -20,7 +20,11 @@ const SearchPage = () => {
   return (
     <>
       <div className="border-b bg-white sticky top-0 p-3">
-        <SearchBox onSearch={handleSearch} loading={loading} />
+        <SearchBox
+          text={searchParams.get("q") || ""}
+          onSearch={handleSearch}
+          loading={loading}
+        />
       </div>
       <SearchResultList result={result} />
     </>
