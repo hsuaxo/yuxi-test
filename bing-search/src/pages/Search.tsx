@@ -20,6 +20,9 @@ const SearchPage = () => {
   return (
     <>
       <div className="border-b bg-white sticky top-0 p-3">
+        <span className="text-2xl text-blue-800 font-medium leading-none block ml-1 mb-2.5">
+          Bing Search API
+        </span>
         <SearchBox
           text={searchParams.get("q") || ""}
           onSearch={handleSearch}
