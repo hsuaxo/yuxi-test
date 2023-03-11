@@ -14,7 +14,7 @@ const SearchResultList = (props: SearchResultListProps) => {
       return (
         <>
           {webPages.value.map((item) => (
-            <WebPageResult result={item} />
+            <WebPageResult result={item} key={item.id} />
           ))}
         </>
       );

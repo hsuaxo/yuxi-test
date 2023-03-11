@@ -9,7 +9,7 @@ interface SearchBoxProps {
 }
 
 const SearchBox = (props: SearchBoxProps) => {
-  const [text, setText] = useState(props.text!);
+  const [text, setText] = useState(props.text || "");
   const { onSearch, loading } = props;
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
