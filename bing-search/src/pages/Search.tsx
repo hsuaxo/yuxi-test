@@ -5,7 +5,7 @@ import SearchBox from "../components/SearchBox";
 import SearchResultList from "../components/SearchResultList";
 
 const SearchPage = () => {
-  const [searchParams, setSearchParams] = useSearchParams();
+  const [searchParams] = useSearchParams();
   const { search, loading, result, error } = useBingSearch();
 
   const handleSearch = (query: string) => {
@@ -13,7 +13,8 @@ const SearchPage = () => {
   };
 
   useEffect(() => {
-    search("microsoft");
+    const query = searchParams.get("q");
+    if (query) search(query);
   }, []);
 
   return (
