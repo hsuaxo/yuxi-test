@@ -18,7 +18,7 @@ const SearchPage = () => {
 
   return (
     <>
-      <div className="border-b sticky top-0 p-3">
+      <div className="border-b bg-white sticky top-0 p-3">
         <SearchBox onSearch={handleSearch} loading={loading} />
       </div>
       <SearchResultList result={result} />

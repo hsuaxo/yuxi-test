@@ -11,7 +11,6 @@ const SearchResultList = (props: SearchResultListProps) => {
   const WebPages = () => {
     if (result && result.webPages) {
       const { webPages } = result;
-
       return (
         <>
           {webPages.value.map((item) => (
@@ -24,7 +23,7 @@ const SearchResultList = (props: SearchResultListProps) => {
   };
 
   return (
-    <div className="p-3">
+    <div className="py-2 px-3.5">
       <WebPages />
     </div>
   );
