@@ -1,28 +1,29 @@
 import { useState } from "react";
 import client from "../client";
 
+export interface BingSearchResult {
+  webPages: {
+    someResultsRemoved: boolean;
+    totalEstimatedMatches: number;
+    value: BingWebPageResult[];
+  };
+}
+
+export interface BingWebPageResult {
+  id: string;
+  name: string;
+  snippet: string;
+  language: string;
+  thumbnailUrl: string;
+  displayUrl: string;
+  url: string;
+}
+
 interface BingSearchHook {
   search(query: string): void;
   loading: boolean;
   result: BingSearchResult | null;
   error: any;
-}
-
-interface BingSearchResult {
-  webPages: {
-    someResultsRemoved: boolean;
-    totalEstimatedMatches: number;
-    value: BingWebPage[];
-  };
-}
-
-interface BingWebPage {
-  id: string;
-  name: string;
-  snippet: string;
-  language: string;
-  displayUrl: string;
-  url: string;
 }
 
 export default (): BingSearchHook => {
