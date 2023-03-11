@@ -19,7 +19,7 @@ const SearchBox = (props: SearchBoxProps) => {
 
   const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
     const { key } = e;
-    if (key.toUpperCase() === "ENTER") {
+    if (key.toUpperCase() === "ENTER" && text) {
       onSearch(text);
     }
   };
