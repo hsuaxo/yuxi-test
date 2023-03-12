@@ -34,7 +34,11 @@ export default (): BingSearchHook => {
   const search = async (query: string) => {
     setLoading(true);
     try {
-      const { data } = await client.get(`search?q=${query}`);
+      const { data } = await client.get(`search?q=${query}`, {
+        params: {
+          count: 25,
+        },
+      });
       setResult(data);
     } catch (error) {
       setError(error);

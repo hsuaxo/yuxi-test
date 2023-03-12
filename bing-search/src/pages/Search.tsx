@@ -1,20 +1,35 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
-import { useBingSearch } from "../bing";
+import { useBingSearch, useBingSpellCheck } from "../bing";
 import SearchBox from "../components/SearchBox";
 import SearchResultList from "../components/SearchResultList";
 
 const SearchPage = () => {
   const [searchParams] = useSearchParams();
-  const { search, loading, result, error } = useBingSearch();
+  const [query, setQuery] = useState(searchParams.get("q") || "");
+  const [suggestedQuery, setSuggestedQuery] = useState("");
+  const bingSearch = useBingSearch();
+  const bingSpellCheck = useBingSpellCheck();
 
-  const handleSearch = (query: string) => {
-    search(query);
+  const handleSearch = async (text: string) => {
+    const suggestion = await bingSpellCheck.check(text);
+    if (suggestion) {
+      setSuggestedQuery(suggestion);
+      bingSearch.search(suggestion);
+    } else {
+      setSuggestedQuery("");
+      bingSearch.search(text);
+    }
+    setQuery(text);
+  };
+
+  const searchWithRawQuery = () => {
+    bingSearch.search(query);
+    setSuggestedQuery("");
   };
 
   useEffect(() => {
-    const query = searchParams.get("q");
-    if (query) search(query);
+    if (query) bingSearch.search(query);
   }, []);
 
   return (
@@ -26,10 +41,24 @@ const SearchPage = () => {
         <SearchBox
           text={searchParams.get("q") || ""}
           onSearch={handleSearch}
-          loading={loading}
+          loading={bingSpellCheck.loading || bingSearch.loading}
         />
+        {suggestedQuery && (
+          <div className="text-sm px-1 mt-3">
+            Showing results for&nbsp;
+            <span className="font-medium">{suggestedQuery}</span>. Search
+            for&nbsp;
+            <span
+              className="text-blue-800 font-medium cursor-pointer hover:underline"
+              onClick={searchWithRawQuery}
+            >
+              {query}
+            </span>
+            ?
+          </div>
+        )}
       </div>
-      <SearchResultList result={result} />
+      <SearchResultList result={bingSearch.result} />
     </>
   );
 };
