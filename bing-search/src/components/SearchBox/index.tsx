@@ -19,6 +19,7 @@ const SearchBox = (props: SearchBoxProps) => {
 
   const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
     const { key } = e;
+    // IF ENTER PRESSED AND TEXT IS NOT EMPTY, SUBMIT TEXT
     if (key.toUpperCase() === "ENTER" && text) {
       onSearch(text);
     }
