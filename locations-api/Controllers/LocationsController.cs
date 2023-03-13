@@ -10,21 +10,23 @@ namespace LocationsAPI.Controllers
     {
         private readonly ILocationService locationService;
 
+        public record RequestResponse(int? count = null, Location[] items = null,
+            string error = null);
+
         public LocationsController(ILocationService locationService)
             => this.locationService = locationService;
 
         [HttpGet]
-        public async Task<IActionResult> Get([FromQuery] TimeSpan hoursFrom, [FromQuery] TimeSpan hoursTo)
+        public async Task<RequestResponse> Get([FromQuery] TimeSpan hoursFrom, [FromQuery] TimeSpan hoursTo)
         {
             try
             {
                 var locations = await locationService.GetAvailableLocations(hoursFrom, hoursTo);
-
-                return Ok(locations);
+                return new RequestResponse(locations.Length, locations);
             }
             catch (Exception ex)
             {
-                return BadRequest("AN ERROR HAS OCURRED");
+                return new RequestResponse(error: ex.Message);
             }
         }
 
@@ -34,12 +36,11 @@ namespace LocationsAPI.Controllers
             try
             {
                 await locationService.AddLocation(location);
-
                 return Ok();
             }
             catch (Exception ex)
             {
-                return BadRequest("AN ERROR HAS OCURRED");
+                return BadRequest(ex);
             }
         }
     }
