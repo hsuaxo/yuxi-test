@@ -5,7 +5,7 @@ using LocationsAPI.Services;
 namespace LocationsAPI.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("/")]
     public class LocationsController : ControllerBase
     {
         private readonly ILocationService locationService;
