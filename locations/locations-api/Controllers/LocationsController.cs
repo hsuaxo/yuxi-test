@@ -10,6 +10,7 @@ namespace LocationsAPI.Controllers
     {
         private readonly ILocationService locationService;
 
+        // RETURN RequestResponse RECORD IN Get METHOD
         public record RequestResponse(int? count = null, Location[] items = null,
             string error = null);
 
@@ -17,11 +18,13 @@ namespace LocationsAPI.Controllers
             => this.locationService = locationService;
 
         [HttpGet]
-        public async Task<RequestResponse> Get([FromQuery] TimeSpan hoursFrom, [FromQuery] TimeSpan hoursTo)
+        public async Task<RequestResponse> Get([FromQuery] TimeSpan hoursFrom,
+            [FromQuery] TimeSpan hoursTo)
         {
             try
-            {
+            {   // GET AVAILABLE LOCATIONS WITHIN HOURS RANGE
                 var locations = await locationService.GetAvailableLocations(hoursFrom, hoursTo);
+                //
                 return new RequestResponse(locations.Length, locations);
             }
             catch (Exception ex)
@@ -35,7 +38,9 @@ namespace LocationsAPI.Controllers
         {
             try
             {
+                // ADD NEW LOCATION
                 await locationService.AddLocation(location);
+                //
                 return Ok();
             }
             catch (Exception ex)

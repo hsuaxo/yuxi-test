@@ -23,6 +23,7 @@ namespace LocationsAPI.Tests
             var timeTo = TimeSpan.Parse("13:00:00");
             var response = await controller.Get(timeFrom, timeTo);
 
+            // CONFIRM RESPONSE IS OF TYPE RequestResponse
             Assert.IsType<LocationsController.RequestResponse>(response);
         }
 
@@ -40,6 +41,7 @@ namespace LocationsAPI.Tests
 
             var result = await controller.Post(location);
 
+            // CONFIRM OK STATUS CODE AFTER ADDING LOCATION
             Assert.IsType<OkResult>(result);
         }
     }
