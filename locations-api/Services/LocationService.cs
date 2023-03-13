@@ -11,7 +11,11 @@ namespace LocationsAPI.Services
 
         public Task<Location[]> GetAvailableLocations(TimeSpan hoursFrom, TimeSpan hoursTo)
         {
-            return context.Locations.AsNoTracking().ToArrayAsync();
+            return context.Locations
+                .AsNoTracking()
+                .Where(location => location.HoursFrom >= hoursFrom
+                    && location.HoursTo <= hoursTo)
+                .ToArrayAsync();
         }
 
         public async Task AddLocation(Location location)

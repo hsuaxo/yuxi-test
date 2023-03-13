@@ -14,13 +14,12 @@ namespace LocationsAPI.Controllers
             => this.locationService = locationService;
 
         [HttpGet]
-        public async Task<IActionResult> Get()
+        public async Task<IActionResult> Get([FromQuery] TimeSpan hoursFrom, [FromQuery] TimeSpan hoursTo)
         {
             try
             {
-                var hoursFrom = TimeSpan.Parse("00:00:00");
-                var hoursTo = TimeSpan.Parse("14:00:00");
                 var locations = await locationService.GetAvailableLocations(hoursFrom, hoursTo);
+
                 return Ok(locations);
             }
             catch (Exception ex)
@@ -35,6 +34,7 @@ namespace LocationsAPI.Controllers
             try
             {
                 await locationService.AddLocation(location);
+
                 return Ok();
             }
             catch (Exception ex)
