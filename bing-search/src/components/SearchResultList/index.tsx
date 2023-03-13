@@ -8,9 +8,11 @@ interface SearchResultListProps {
 const SearchResultList = (props: SearchResultListProps) => {
   const { result } = props;
 
+  // ASSEMBLE A WebPageResult (IF ANY) LIST
   const WebPages = () => {
     if (result && result.webPages) {
       const { webPages } = result;
+
       return (
         <>
           {webPages.value.map((item) => (

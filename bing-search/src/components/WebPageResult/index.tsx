@@ -20,6 +20,7 @@ const WebPageResult = (props: WebPageResultProps) => {
         <span className="text-green-700 block">{result.displayUrl}</span>
         <span className="text-gray-500 text-sm block">{result.snippet}</span>
       </div>
+      {/* IF EXISTS, DISPLAY RESULT IMAGE THUMBNAIL */}
       {result.thumbnailUrl && (
         <div>
           <img

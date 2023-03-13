@@ -5,6 +5,7 @@ const HomePage = () => {
   const navigate = useNavigate();
 
   const handleSearch = (query: string) => {
+    // REDIRECT QUERY TO SEARCH PAGE
     navigate(`/search?q=${query}`);
   };
 

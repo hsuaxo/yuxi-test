@@ -12,23 +12,30 @@ const SearchPage = () => {
   const bingSpellCheck = useBingSpellCheck();
 
   const handleSearch = async (text: string) => {
+    // GET SPELL CHECK SUGGESTIONS
     const suggestion = await bingSpellCheck.check(text);
+    //
     if (suggestion) {
+      // SEARCH FOR SUGGESTIONS INSTEAD
       setSuggestedQuery(suggestion);
       bingSearch.search(suggestion);
     } else {
+      // IF NO SUGGESTIONS, SEARCH FOR RAW QUERY
       setSuggestedQuery("");
       bingSearch.search(text);
     }
+    // SAVE RAW QUERY
     setQuery(text);
   };
 
   const searchWithRawQuery = () => {
+    // SEARCH FOR RAW QUERY IN SPITE OF SUGGESTIONS
     bingSearch.search(query);
     setSuggestedQuery("");
   };
 
   useEffect(() => {
+    // SEARCH FOR QUERY STRING TEXT
     if (query) bingSearch.search(query);
   }, []);
 
@@ -43,11 +50,13 @@ const SearchPage = () => {
           onSearch={handleSearch}
           loading={bingSpellCheck.loading || bingSearch.loading}
         />
+        {/* SHOW SUGGESTED QUERY (IF ANY) */}
         {suggestedQuery && (
           <div className="text-sm px-1 mt-3">
             Showing results for&nbsp;
             <span className="font-medium">{suggestedQuery}</span>. Search
             for&nbsp;
+            {/* GIVE OPTION TO SEARCH FOR RAW QUERY ANYWAY */}
             <span
               className="text-blue-800 font-medium cursor-pointer hover:underline"
               onClick={searchWithRawQuery}

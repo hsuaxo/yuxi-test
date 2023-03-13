@@ -25,6 +25,7 @@ export default (): BingSpellCheckHook => {
 
   const check = async (text: string): Promise<string | undefined> => {
     setLoading(true);
+
     try {
       const { data } = await client.get<BingSpellCheckResult>(
         `spellcheck?text=${text}`,
@@ -32,6 +33,7 @@ export default (): BingSpellCheckHook => {
           params: { mode: "spell" },
         }
       );
+      // REPLACE FLAGGED WORDS IN QUERY TEXT (IF ANY)
       if (data.flaggedTokens.length) {
         data.flaggedTokens.forEach((flaggedToken) => {
           const { token, suggestions } = flaggedToken;
@@ -41,6 +43,7 @@ export default (): BingSpellCheckHook => {
         });
         return text;
       }
+      // IF THERE WERE NO SUGGESTIONS, RETURN NOTHING (UNDEFINED)
     } catch (error) {
       setError(error);
     } finally {

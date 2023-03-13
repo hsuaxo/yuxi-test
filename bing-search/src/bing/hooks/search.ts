@@ -33,12 +33,16 @@ export default (): BingSearchHook => {
 
   const search = async (query: string) => {
     setLoading(true);
+
     try {
+      // GET SEARCH RESULTS
       const { data } = await client.get(`search?q=${query}`, {
         params: {
+          // SET RESULTS PAGE SIZE
           count: 25,
         },
       });
+      // RETURN RESULTS
       setResult(data);
     } catch (error) {
       setError(error);

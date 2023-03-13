@@ -42,6 +42,7 @@ const SearchBox = (props: SearchBoxProps) => {
         onChange={handleChange}
         onKeyDown={handleKeyDown}
       />
+      {/* IF LOADING, SHOW SPINNER INSTEAD OF LOGO ON THE RIGHT */}
       {loading ? Spinner : Logo}
     </div>
   );
